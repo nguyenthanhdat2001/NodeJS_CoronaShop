@@ -1,0 +1,90 @@
+<div class="container mt-3">
+    <h2>Thùng rác</h2>
+    <p>Những dữ liệu trong thùng rác được lưu trữ 30 ngày trước khi xóa vĩnh viễn</p>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>STT</th>
+                <th>Ảnh</th>
+                <th>Tên</th>
+                <th>Thương hiệu</th>
+                <th>Giá tiền</th>
+                <th>Chức năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products}}
+            <tr>
+                <td>{{sum @index 1}}</td>
+                <td>
+                    <img src="{{this.image}}" alt="{{this.name}}" width="100">
+                </td>
+                <td>{{this.name}}</td>
+                <td>{{this.brand}}</td>
+                <td>{{this.price}}$</td>
+                <td>
+                    <button type="button" class="btn btn-success btn-restore" data-bs-id="{{this._id}}">Phục
+                        hồi</button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirm"
+                        data-bs-id="{{this._id}}">Xóa</button>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <th colspan="6">
+                    <p class="text-center">Thùng rác trống</p>
+                </th>
+            </tr>
+            {{/each}}
+    </table>
+</div>
+
+{{!-- delete confirm --}}
+<div class="modal" id="deleteConfirm" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Sản phẩm sẽ bị xóa vĩnh viễn</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnDelete" class="btn btn-danger">Xóa</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- hidden form --}}
+<form method="post" name="restore-product"></form>
+<form method="post" name="remove-product"></form>
+
+<script>
+    const ID = document.getElementById('deleteConfirm');
+    var id;
+    const deleteBtn = document.getElementById('btnDelete');
+    const removeProduct = document.forms['remove-product'];
+    const restoreProduct = document.forms['restore-product'];
+    const restoreBtnAll = document.querySelectorAll('.btn-restore');
+
+    ID.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        id = button.getAttribute('data-bs-id');
+    })
+
+    deleteBtn.onclick = function () {
+        removeProduct.action = "/products/" + id + "/delete?_method=DELETE";
+        removeProduct.submit();
+    }
+    
+    restoreBtnAll.forEach((restoreBtn) => {
+        restoreBtn.addEventListener('click', () => {
+            var courseId = restoreBtn.getAttribute('data-bs-id');
+            restoreProduct.action = '/products/' + courseId + '/restore?_method=PATCH';
+            restoreProduct.submit();
+        });
+    });
+</script>

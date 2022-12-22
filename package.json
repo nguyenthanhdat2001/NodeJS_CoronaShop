@@ -23,8 +23,13 @@
   },
   "homepage": "https://github.com/nguyenthanhdat2001/NodeJS_CoronaShop#readme",
   "dependencies": {
+    "bootstrap-icons": "^1.10.2",
     "express": "^4.18.2",
-    "express-handlebars": "^6.0.6"
+    "express-handlebars": "^6.0.6",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.8.0",
+    "mongoose-delete": "^0.5.4",
+    "mongoose-slug-generator": "^1.0.4"
   },
   "devDependencies": {
     "morgan": "^1.10.0",

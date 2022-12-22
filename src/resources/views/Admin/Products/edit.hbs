@@ -1,0 +1,103 @@
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Sản phẩm</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Products</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card">
+                <form class="form-horizontal" method="post" action="/admin/products/{{products._id}}?_method=PUT">
+                    <div class="card-body">
+                        <h4 class="card-title">Sửa sản phẩm: {{products.name}}</h4>
+                        <div class="form-group row">
+                            <label for="category" class="col-sm-3 text-right control-label col-form-label">Danh
+                                mục</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="category">
+                                    <option selected value="{{products.category._id}}">{{products.category.name}}</option>
+                                    {{#each categories}}
+                                    <option value="{{this._id}}">{{this.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="image" class="col-sm-3 text-right control-label col-form-label">Link
+                                ảnh</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" name="image" id="image" rows="6">{{products.image}}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-3 text-right control-label col-form-label">Tên sản
+                                phẩm</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="name" id="name" value="{{products.name}}"
+                                    placeholder="Type something">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="price" class="col-sm-3 text-right control-label col-form-label">Giá
+                                tiền</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="price" id="price"
+                                        value="{{products.price}}" placeholder="Type something"
+                                        aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">$</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="des" class="col-sm-3 text-right control-label col-form-label">Mô tả</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" name="des" id="des">{{products.des}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <a href="/admin/products" class="btn btn-secondary">Quay lại</a>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Preview / {{products.category.name}}</h4>
+                    <img src="{{products.image}}" class="card-img-top" alt="...">
+                    <h5 class="card-title mt-3">{{products.name}}</h5>
+
+                    <p class="card-text">Price: {{products.price}}$</p>
+                    <p class="card-text">
+                        {{products.des}}</p>
+                </div>
+                <div class="border-top">
+                    <div class="card-body">
+                        <a href="/products/{{products.slug}}" target="_blank" type="button" class="btn btn-primary">Xem sản phẩm trên
+                            client</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer text-center">
+    All Rights Reserved by Matrix-admin. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
+</footer>
