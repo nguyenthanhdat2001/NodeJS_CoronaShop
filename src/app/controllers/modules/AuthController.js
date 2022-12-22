@@ -5,11 +5,28 @@ class AuthController {
     login(req, res, next) {
         res.render('login')
     }
+    //[POST] /auth/login_post
+    login_post(req, res, next) {
+        const username = req.body.username
+        const password = req.body.password
+
+        customer.findOne({
+            username: username,
+            password: password
+        }).then(data => {
+            if (data) {
+                req.session.cusID = data._id
+                res.redirect('/')
+            }else{
+                res.redirect('/auth/login')
+            }
+        }).catch(next)
+    }
     //[GET] /auth/register
     register(req, res, next) {
         res.render('register')
     }
-    //[GET] /auth/register_post
+    //[POST] /auth/register_post
     register_post(req, res, next) {
         const data = req.body
         const item = new customer(data)
@@ -17,7 +34,7 @@ class AuthController {
             .then(() => {
                 res.redirect('/auth/login')
             })
-            .catch()
+            .catch(next)
     }
 }
 

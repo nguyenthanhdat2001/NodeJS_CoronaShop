@@ -1,3 +1,5 @@
+//important
+
 
 //import admin router
 import adminRouter from './Admin/siteAdmin.js'
@@ -21,6 +23,8 @@ function route(app) {
     app.use("/admin/products", productRouter);
     app.use("/admin/auth", authRouter);
     app.use("/admin", adminRouter);
+
+    //check login
 
     //Client
     app.use("/shopping-cart", cart_ClientRouter)

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import CartController from "../controllers/modules/CartController.js";
 import Product from "./product.js";
 
 const Schema = mongoose.Schema;
@@ -56,13 +57,23 @@ customer.methods.addToCart = async function (AddToCart) {
         cart.total_price += product.price * parseInt(AddToCart.quantity)
         return this.save();
     }
-    console.log(this.cart)
+}
+
+customer.methods.updateCart = async function (CurrentQuantity) {
+    const cart = this.cart
+    cart.total_price = 0
+    for (let i = 0; i < cart.items.length; i++) {
+        cart.items[i].quantity = CurrentQuantity[i]
+        let prod = await Product.findById(cart.items[i].productID)
+        cart.total_price += prod.price * cart.items[i].quantity
+    }
+    return this.save();
 }
 
 customer.methods.removeFromCart = async function (objID) {
     const cart = this.cart
-    const isExisting = cart.items.findIndex(objInItems => 
-         String(objInItems._id).trim() === objID.trim()
+    const isExisting = cart.items.findIndex(objInItems =>
+        String(objInItems._id).trim() === objID.trim()
     )
     if (isExisting >= 0) {
         const prod = await Product.findById(cart.items[isExisting].productID)

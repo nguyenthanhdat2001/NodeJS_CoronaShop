@@ -3,7 +3,7 @@ import cartController from '../../app/controllers/modules/CartController.js'
 
 const router = express.Router()
 
-
+router.post('/update', cartController.update)
 router.post('/:id/remove', cartController.delete)
 router.get('/', cartController.index)
 

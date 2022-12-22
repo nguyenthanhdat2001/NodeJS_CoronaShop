@@ -6,6 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import router from './routes/index.js'
 import customer from './app/models/customer.js'
+import session from 'express-session'
 
 const app = express();
 const port = 3000;
@@ -39,6 +40,14 @@ app.set("views", path.join(__dirname, "resources", "views"));
 
 //Morgan HTTP logger
 // app.use(morgan("combined"));
+
+//use session
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true, maxAge: 1000 * 60 * 60 * 24 }
+}))
 
 //check login
 app.use((req, res, next) => {
