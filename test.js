@@ -31,21 +31,17 @@ const AccountModal = mongoose.model('account', account)
 const CourseModal = mongoose.model('course', course)
 
 //get session
-app.get('/set_session', (req, res) => {
-    //set a object to session
-    req.session.cart = [
-        {
-            name: 'admin', 
-        }
-    ]
-        
-    
-
-    AccountModal.findById(req.body.idProduct)
+app.get('/set_session', (req, res, next) => {
+    //set a object to session   
+    AccountModal.findById('639fe3587877e1085114e5e3')
         .then(data => {
-            req.session.cart.push(data)
-            return res.status(200).json({ status: 'success' })
-        })
+            if(data){
+                req.session.User = data._id
+                res.redirect('/get_session')
+            }else{
+                res.send('ID sai')
+            }
+        }).catch(next)
 
 })
 

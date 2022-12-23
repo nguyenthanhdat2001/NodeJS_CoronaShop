@@ -1,5 +1,4 @@
 import customer from "../../models/customer.js"
-
 class AuthController {
     //[GET] /auth/login
     login(req, res, next) {
@@ -9,15 +8,15 @@ class AuthController {
     login_post(req, res, next) {
         const username = req.body.username
         const password = req.body.password
-
         customer.findOne({
             username: username,
             password: password
         }).then(data => {
             if (data) {
-                req.session.cusID = data._id
-                res.redirect('/')
-            }else{
+                console.log('Login success')
+                return res.redirect('/shopping-cart')
+            } else {
+                console.log('Login fail')
                 res.redirect('/auth/login')
             }
         }).catch(next)

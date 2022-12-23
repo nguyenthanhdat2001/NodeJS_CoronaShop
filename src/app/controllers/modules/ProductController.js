@@ -28,11 +28,15 @@ class ProductController {
     }
     //[POST] /products/add_to_cart
     addToCart(req, res, next) {
-        req.user.addToCart(req.body)
-            .then(() => {
-                res.redirect('/shopping-cart')
-            }
-            ).catch(next)
+        if(req.user){
+            req.user.addToCart(req.body)
+                .then(() => {
+                    res.redirect('/shopping-cart')
+                }
+                ).catch(next)
+        }else{
+            res.redirect('/auth/login')
+        }
     }
 }
 

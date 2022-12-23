@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import CartController from "../controllers/modules/CartController.js";
 import Product from "./product.js";
+import Bill from "./bill.js"
 
 const Schema = mongoose.Schema;
 const customer = new Schema({
@@ -26,7 +26,7 @@ const customer = new Schema({
             color: { type: String },
             quantity: { type: Number, require: true },
         }],
-        total_price: { type: Number }
+        total_price: { type: Number, default: 0 }
     }
 });
 
@@ -82,5 +82,31 @@ customer.methods.removeFromCart = async function (objID) {
         return this.save();
     }
 }
+
+customer.methods.removeCart = async function (data) {
+    const cart = this.cart 
+    const bill = new Bill
+    bill.customer = data.customer
+    bill.customer_name = data.customer_name
+    bill.city = data.city
+    bill.district = data.district
+    bill.wards = data.wards
+    bill.phone_number = data.phone_number
+    bill.address = data.address
+    bill.total_price = data.total_price
+
+    const lengthItem = cart.items.length
+    for (let i = 0; i < cart.items.length; i++){
+        bill.bought.push(cart.items[i])
+    }
+    bill.save()
+
+    console.log("bill",bill) 
+    cart.items.splice(0, lengthItem);
+    cart.total_price = 0
+    console.log("cart",cart) 
+    return this.save();
+}
+
 
 export default mongoose.model('customer', customer)

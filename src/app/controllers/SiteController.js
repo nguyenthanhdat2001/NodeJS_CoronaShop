@@ -19,6 +19,7 @@ class SiteController {
     //[GET] /products
     product(req, res) {
         res.render('Products/index')
+
     }
     //[GET] /shopping-cart
     cart(req, res, next) {

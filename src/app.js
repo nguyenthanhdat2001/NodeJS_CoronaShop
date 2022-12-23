@@ -20,10 +20,26 @@ db.Connect();
 //Method override 
 app.use(methodOverride('_method'))
 
-//Static file
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({ extended: true }));
+// creating 24 hours from milliseconds
+const oneDay = 1000 * 60 * 60 * 24;
+//session middleware
+app.use(session({
+  secret: 'hello',
+  resave: false,
+  saveUninitialized: true,  
+  cookie: {
+    secure: true,
+    maxAge: oneDay,
+    sameSite: 'strict'
+  }
+}))
+
+// parsing the incoming data 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//serving public file
+app.use(express.static(path.join(__dirname, "public")));
 
 //Template engine
 app.engine(
@@ -41,22 +57,16 @@ app.set("views", path.join(__dirname, "resources", "views"));
 //Morgan HTTP logger
 // app.use(morgan("combined"));
 
-//use session
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true, maxAge: 1000 * 60 * 60 * 24 }
-}))
-
-//check login
+// check login
 app.use((req, res, next) => {
-  customer.findById('63a27e54ea49ea5545391744')
+  const userID = '63a27e54ea49ea5545391744'
+  // console.log('Session: ', userID)
+  customer.findById(userID)
     .then(customerID => {
       req.user = customerID;
       next()
     })
-    .catch(next)
+    .catch(err => console.log("Error: ", err))
 })
 
 //Route init
