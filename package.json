@@ -4,9 +4,9 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --inspect src/app.js",
-    "watch": "sass -w src/resources/scss/app.scss src/public/css/app.css"
+    "watch": "sass -w src/resources/scss/app.scss src/public/css/app.css",
+    "build": "npm i express express-handlebars method-override mongoose mongoose-slug-generator mongoose-delete morgan nodemon"
   },
   "repository": {
     "type": "git",
