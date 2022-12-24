@@ -74,12 +74,12 @@
 
                 <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
                     <div class="flex-w flex-m m-r-20 m-tb-5">
-                        <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon"
-                            placeholder="Coupon Code">
+                        {{!-- <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
+                            name="coupon" placeholder="Coupon Code">
 
                         <div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
                             Apply coupon
-                        </div>
+                        </div> --}}
                     </div>
 
                     <button id="btn_update"
@@ -128,9 +128,10 @@
                                 <span class="stext-112 cl8">
                                     Location Shipping
                                 </span>
-                                <input type="hidden" name="customer" value="{{userCart._id}}">
+                                <input type="hidden" name="customerID" value="{{userCart._id}}">
                                 <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                                    <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="customer_name" placeholder="Tên người nhận">
+                                    <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="customer_name"
+                                        placeholder="Tên người nhận">
                                 </div>
 
                                 <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
@@ -169,9 +170,10 @@
                         </div>
 
                         <div class="size-209 p-t-1">
-                            <span class="mtext-110 cl2" >
-                                $ <span id="total_price">{{cart.total_price}}</span>
-                                <input type="hidden" name="total_price" value="{{cart.total_price}}">
+                            <span class="mtext-110 cl2">
+                                $ <span>{{cart.total_price}}</span>
+                                <input type="number" id="total_price" name="total_price" value="{{cart.total_price}}"
+                                    hidden>
                             </span>
                         </div>
                     </div>
@@ -186,9 +188,6 @@
     </div>
 </div>
 
-
-
-
 <form method="post" name="cartItemRemove"></form>
 
 <script>
@@ -199,6 +198,13 @@
     const checkOutForm = document.forms['btn_checkout']
     const btnCheckOut = document.getElementById('btn_checkout')
     const totalPrice = document.getElementById('total_price')
+
+    if (parseFloat(totalPrice.value) === 0) {
+        btnCheckOut.disabled = true
+    }else{
+        btnCheckOut.disable = false
+    }
+
 
     btnRemoves.forEach(btnRemove => {
         btnRemove.onclick = function (e) {

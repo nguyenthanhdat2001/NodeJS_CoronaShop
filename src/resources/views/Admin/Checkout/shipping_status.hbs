@@ -1,0 +1,73 @@
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">{{title}}</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item">Checkout</li>
+                        <li class="breadcrumb-item active" aria-current="page">Shipping</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h5 class="card-title m-b-0 text-warning">Đã thanh toán, chờ vận chuyển</h5>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="zero_config" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="font-weight-bold">STT</th>
+                                    <th class="font-weight-bold">Name</th>
+                                    <th class="font-weight-bold">Phone number</th>
+                                    <th class="font-weight-bold">City</th>
+                                    <th class="font-weight-bold">District</th>
+                                    <th class="font-weight-bold">Wards</th>
+                                    <th class="font-weight-bold">Address</th>
+                                    <th class="font-weight-bold">Total price</th>
+                                    <th class="font-weight-bold">Created At</th>
+                                    <th class="font-weight-bold">Handle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each bill}}
+                                <tr>
+                                    <td>{{sum @index 1}}</td>
+                                    <th>{{this.customer_name}}</th>
+                                    <td>{{this.phone_number}}</td>
+                                    <td>{{this.city}}</td>
+                                    <td>{{this.district}}</td>
+                                    <td>{{this.wards}}</td>
+                                    <td>{{this.address}}</td>
+                                    <td>$ {{this.total_price}}</td>
+                                    <td>{{this.updatedAt}}</td>
+                                    <th>
+                                        <a href="/admin/checkout/payment/{{this._id}}"
+                                            class="btn btn-primary mr-1 mt-1">Xem đơn</a>
+                                    </th>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <th colspan="10" class="text-center">
+                                        Chưa có đơn hàng nào được vận chuyển
+                                    </th>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

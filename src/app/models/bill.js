@@ -8,14 +8,11 @@ const bills = new Schema({
         ref: 'customer'
     },
     bought: [{
-        productID: {
-            type: Schema.Types.ObjectId,
-            ref: 'products',
-            require: true
-        },
-        size: { type: String },
-        color: { type: String },
-        quantity: { type: Number, require: true },
+        // product_name: { type: String },
+        // price: { type: Number },
+        // size: { type: String },
+        // color: { type: String },
+        // quantity: { type: Number, require: true },
     }],
     customer_name: { type: String },
     city: { type: String },
@@ -23,7 +20,10 @@ const bills = new Schema({
     wards: { type: String },
     phone_number: { type: String },
     address: { type: String },
-    total_price: { type: Number }
+    total_price: { type: Number },
+    payment_status: { type: Boolean, default: false },
+    shipping_status: { type: Boolean, default: false },
+    delivery_status: { type: Boolean, default: false },
 }, {
     timestamps: true
 });

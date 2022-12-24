@@ -86,7 +86,7 @@ customer.methods.removeFromCart = async function (objID) {
 customer.methods.removeCart = async function (data) {
     const cart = this.cart 
     const bill = new Bill
-    bill.customer = data.customer
+    bill.customerID = data.customerID
     bill.customer_name = data.customer_name
     bill.city = data.city
     bill.district = data.district
@@ -97,14 +97,19 @@ customer.methods.removeCart = async function (data) {
 
     const lengthItem = cart.items.length
     for (let i = 0; i < cart.items.length; i++){
-        bill.bought.push(cart.items[i])
+        let prod = await Product.findById(cart.items[i].productID) //lay ten sp
+        bill.bought.push({
+            product_name: prod.name,
+            price: prod.price,
+            image: prod.image,
+            size: cart.items[i].size,
+            color: cart.items[i].color,
+            quantity: cart.items[i].quantity
+        })
     }
     bill.save()
-
-    console.log("bill",bill) 
     cart.items.splice(0, lengthItem);
     cart.total_price = 0
-    console.log("cart",cart) 
     return this.save();
 }
 

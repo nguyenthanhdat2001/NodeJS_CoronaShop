@@ -1,0 +1,29 @@
+<div class="container">
+    <a href="/checkout" class="btn btn-success mt-3">Back</a>
+    <table class="table table-bordered mt-3 mb-5">
+        <thead>
+            <th scope="col">STT</th>
+            <th scope="col">Image</th>
+            <th scope="col">Product name</th>
+            <th scope="col">Size</th>
+            <th scope="col">Color</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+        </thead>
+        <tbody>
+            {{#each bill.bought}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>
+                    <img style="max-width: 100px;" src="{{this.image}}" alt="{{this.name}}">
+                </td>
+                <td>{{this.product_name}}</td>
+                <td>{{this.size}}</td>
+                <td>{{this.color}}</td>
+                <td>{{this.quantity}}</td>
+                <td>{{multiplication this.price this.quantity}} $</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

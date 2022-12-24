@@ -1,0 +1,119 @@
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">{{title}}</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                        <li class="breadcrumb-item">Checkout</li>
+                        <li class="breadcrumb-item active" aria-current="page">Payment</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h4 class="card-title m-b-0 text-danger">Đã đặt hàng, chờ thanh toán</h4>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="zero_config" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="font-weight-bold">STT</th>
+                                    <th class="font-weight-bold">Name</th>
+                                    <th class="font-weight-bold">Phone number</th>
+                                    <th class="font-weight-bold">City</th>
+                                    <th class="font-weight-bold">District</th>
+                                    <th class="font-weight-bold">Wards</th>
+                                    <th class="font-weight-bold">Address</th>
+                                    <th class="font-weight-bold">Total price</th>
+                                    <th class="font-weight-bold">Created At</th>
+                                    <th class="font-weight-bold">Handle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each bill}}
+                                <tr>
+                                    <td>{{sum @index 1}}</td>
+                                    <th>{{this.customer_name}}</th>
+                                    <td>{{this.phone_number}}</td>
+                                    <td>{{this.city}}</td>
+                                    <td>{{this.district}}</td>
+                                    <td>{{this.wards}}</td>
+                                    <td>{{this.address}}</td>
+                                    <td>$ {{this.total_price}}</td>
+                                    <td>{{this.createdAt}}</td>
+                                    <th>
+                                        <a href="/admin/checkout/payment/{{this._id}}"
+                                            class="btn btn-primary mr-1 mt-1">Chi tiết</a>
+                                        <button type="button" class="btn btn-success mt-1" data-toggle="modal"
+                                            data-target="#submit" data-id="{{this._id}}">Đã thanh toán</button>
+                                    </th>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <th colspan="10" class="text-center">
+                                        Không có đơn hàng nào được đặt
+                                    </th>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer text-center">
+    All Rights Reserved by Matrix-admin. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
+</footer>
+
+{{!-- Submit confirm --}}
+<div class="modal fade" id="submit" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Xác nhận đã thanh toán ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSubmit" class="btn btn-success">Đồng ý</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Submit form hidden --}}
+<form method="post" name="change_status"></form>
+
+<script>
+    let id;
+    const btnSubmit = document.getElementById('btnSubmit');
+    const changeStatusForm = document.forms['change_status']
+
+    $('#submit').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        id = button.data('id')
+    })
+
+    btnSubmit.onclick = function () {
+        changeStatusForm.action = "/admin/checkout/payment/" + id + "/submit?_method=PUT";
+        changeStatusForm.submit()
+    }
+</script>

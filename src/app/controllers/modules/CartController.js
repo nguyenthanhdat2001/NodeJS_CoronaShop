@@ -34,7 +34,7 @@ class CartController {
         // res.json(req.body)
         const data = req.body
         req.user.removeCart(data)
-        .then(()=> res.json(data))
+        .then(()=> res.redirect('/checkout'))
     }
 }
 

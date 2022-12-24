@@ -1,0 +1,169 @@
+<div class="container">
+    <div class="bor10 m-t-50 m-b-50 p-t-43 p-b-40">
+        <!-- Tab01 -->
+        <div class="tab01">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item p-b-10">
+                    <a class="nav-link active" data-toggle="tab" href="#pay" role="tab">Chờ thanh toán</a>
+                </li>
+
+                <li class="nav-item p-b-10">
+                    <a class="nav-link" data-toggle="tab" href="#ship" role="tab">Đang vận chuyển</a>
+                </li>
+
+                <li class="nav-item p-b-10">
+                    <a class="nav-link" data-toggle="tab" href="#delivery" role="tab">Đã mua</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content p-t-43">
+                <!-- Pay -->
+                <div class="tab-pane fade show active" id="pay" role="tabpanel">
+                    <div class="how-pos2 p-lr-15-md">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Code</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Phone number</th>
+                                    <th scope="col">Total price</th>
+                                    <th scope="col">Handle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each pay}}
+                                <tr>
+                                    <th scope="row">{{sum @index 1}}</th>
+                                    <td>{{this._id}}</td>
+                                    <td>{{this.customer_name}}</td>
+                                    <td>{{this.address}}</td>
+                                    <td>{{this.phone_number}}</td>
+                                    <td>{{this.total_price}} $</td>
+                                    <td>
+                                        <a href="/checkout/{{this._id}}" class="btn btn-primary mr-1 mt-1">Chi tiết đơn
+                                            hàng</a>
+                                        <button type="button" class="btn_cancel_order btn btn-danger mt-1"
+                                            data-id="{{this._id}}">Hủy
+                                            đơn</button>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="8" class="text-center">Bạn chưa mua sản phẩm nào</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        {{!-- cancel order form --}}
+                        <form method="post" name="cancel_order"></form>
+                    </div>
+                </div>
+
+                <!-- Ship -->
+                <div class="tab-pane fade" id="ship" role="tabpanel">
+                    <div class="how-pos2 p-lr-15-md">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Code</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Phone number</th>
+                                    <th scope="col">Total price</th>
+                                    <th scope="col">Handle</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each ship}}
+                                <tr>
+                                    <th scope="row">{{sum @index 1}}</th>
+                                    <td>{{this._id}}</td>
+                                    <td>{{this.customer_name}}</td>
+                                    <td>{{this.address}}</td>
+                                    <td>{{this.phone_number}}</td>
+                                    <td>{{this.total_price}} $</td>
+                                    <td>
+                                        <a href="/checkout/{{this._id}}" class="btn btn-primary mr-1 mt-1">Chi tiết đơn
+                                            hàng</a>
+                                        <button type="button" class="btn_delivery btn btn-success mt-1"
+                                            data-id="{{this._id}}">Đã nhận đơn</button>
+                                    </td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="8" class="text-center">Chưa có sản phẩm nào được chuyển đi</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        {{!-- delivery form --}}
+                        <form method="post" name="delivery_form"></form>
+                    </div>
+                </div>
+
+                <!-- Delivery -->
+                <div class="tab-pane fade" id="delivery" role="tabpanel">
+                    <div class="how-pos2 p-lr-15-md">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Code</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Phone number</th>
+                                    <th scope="col">Total price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each delivery}}
+                                <tr>
+                                    <th scope="row">{{sum @index 1}}</th>
+                                    <td>{{this._id}}</td>
+                                    <td>{{this.customer_name}}</td>
+                                    <td>{{this.address}}</td>
+                                    <td>{{this.phone_number}}</td>
+                                    <td>{{this.total_price}} $</td>
+                                </tr>
+                                {{else}}
+                                <tr>
+                                    <td colspan="8" class="text-center">Chưa có sản phẩm nào được chuyển đi</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var id;
+    const deliveryForm = document.forms['delivery_form']
+    const cancelForm = document.forms['cancel_order']
+    const btnCancels = document.querySelectorAll('.btn_cancel_order')
+    const btnDeliveries = document.querySelectorAll('.btn_delivery')
+
+    btnCancels.forEach(btnCancel => {
+        btnCancel.onclick = function (e) {
+            const id = e.target.dataset.id
+            cancelForm.action = '/checkout/' + id + '/cancel?_method=DELETE'
+            cancelForm.submit()
+        }
+    })
+
+    btnDeliveries.forEach(btnCancel => {
+        btnCancel.onclick = function (e) {
+            const id = e.target.dataset.id
+            deliveryForm.action = '/checkout/' + id + '/delivery?_method=PUT'
+            deliveryForm.submit()
+        }
+    })
+</script>

@@ -1,7 +1,7 @@
 import product from '../models/product.js'
 import category from '../models/category.js'
+import bill from '../models/bill.js'
 import { mongoose } from '../../util/mongoose.js'
-import { renderSync } from 'node-sass'
 class SiteController {
     index(req, res, next) {
         //[GET] /
@@ -24,6 +24,9 @@ class SiteController {
     //[GET] /shopping-cart
     cart(req, res, next) {
         res.render('shopping_cart')
+    }
+    checkout(req, res, next) {
+        res.render('checkout')
     }
 }
 

@@ -1,0 +1,83 @@
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Đơn hàng</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item">Checkout</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{bill.customer_name}}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Tên khách hàng: {{bill.customer_name}}</h4>
+                    <table class="table mt-3">
+                        <tbody>
+                            <tr>
+                                <th>Thành phố/Tỉnh:</th>
+                                <td>{{bill.city}}</td>
+                            </tr>
+                            <tr>
+                                <th>Quận/Huyện</th>
+                                <td>{{bill.district}}</td>
+                            </tr>
+                            <tr>
+                                <th>Phường/Xã</th>
+                                <td>{{bill.wards}}</td>
+                            </tr>
+                            <tr>
+                                <th>Số điện thoại</th>
+                                <td>{{bill.phone_number}}</td>
+                            </tr>
+                            <tr>
+                                <th>Địa chỉ</th>
+                                <td>{{bill.address}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="border-top">
+                    <div class="card-body">
+                        <h4 class="card-text">Tổng tiền: {{bill.total_price}} $</h4>
+                    </div>
+                </div>
+            </div>
+            <a href="/admin/checkout/payment" class="btn btn-primary">Quay lại</a>
+        </div>
+        {{#each bill.bought}}
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <img src="{{this.image}}" class="card-img-top" alt="...">
+                    <h5 class="card-title mt-3">{{this.product_name}}</h5>
+                    <p class="card-text">Giá: {{this.price}} $</p>
+                    <p class="card-text">Size: {{this.size}} </p>
+                    <p class="card-text">Màu: {{this.color}}</p>
+                    <p class="card-text">Số lượng: {{this.quantity}}</p>
+                </div>
+                <div class="border-top">
+                    <div class="card-body">
+                        <h5 class="card-text">Thành tiền: {{multiplication this.quantity this.price}} $</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="col-md-8">
+            <h3 class="text-center">Hóa đơn trống</h3>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<footer class="footer text-center">
+    All Rights Reserved by Matrix-admin. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
+</footer>
