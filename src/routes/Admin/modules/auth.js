@@ -5,7 +5,7 @@ const router = express.Router()
 
 // router.get('/:slug', newsController.show)
 
-router.get('/login', authController.login)
-router.get('/register', authController.register)
+// router.get('/login', authController.login)
+// router.get('/register', authController.register)
 
 export default router

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { get } from "mongoose";
 import express from 'express';
 import session from 'express-session';
 const app = express();
@@ -30,37 +30,19 @@ const course = new Schema({
 const AccountModal = mongoose.model('account', account)
 const CourseModal = mongoose.model('course', course)
 
-//get session
-app.get('/set_session', (req, res, next) => {
-    //set a object to session   
-    AccountModal.findById('639fe3587877e1085114e5e3')
-        .then(data => {
-            if(data){
-                req.session.User = data._id
-                res.redirect('/get_session')
-            }else{
-                res.send('ID sai')
-            }
-        }).catch(next)
-
-})
-
-//set session
-app.get('/get_session', (req, res) => {
-    //check session
-    if (req.session.User) {
-        return res.status(200).json({ status: 'success', session: req.session.User })
+function home(req,res){
+    req.session.user = {
+        data:'hello'
     }
-    return res.status(200).json({ status: 'error', session: 'No session' })
-})
+    res.redirect('/test_session')
+}
+function test(req,res){
+    res.json(req.session.user)
+}
 
-//destroy session
-app.get('/destroy_session', (req, res) => {
-    //destroy session
-    req.session.destroy(function (err) {
-        return res.status(200).json({ status: 'success', session: 'cannot access session here' })
-    })
-})
+
+app.get('/test_session', test)
+app.get('/', home)
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}`);

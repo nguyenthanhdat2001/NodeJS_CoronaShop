@@ -1,4 +1,3 @@
-import { response } from "express";
 import { mongoose } from "../../../util/mongoose.js";
 
 class CartController {

@@ -7,6 +7,7 @@ import productRouter from './Admin/modules/products.js'
 import categoryRouter from './Admin/modules/categories.js'
 import trashRouter from './Admin/modules/trash.js'
 import checkoutRouter from './Admin/modules/checkout.js'
+import accountRouter from './Admin/modules/account.js'
 //import client router
 import siteRouter from './site.js'
 import auth_ClientRouter from './modules/auth.js'
@@ -16,6 +17,7 @@ import checkout_ClientRouter from './modules/checkout.js'
 
 function route(app) {
     //Admin
+    app.use("/admin/account", accountRouter)
     app.use("/admin/checkout", checkoutRouter)
     app.use("/admin/trash", trashRouter);
     app.use("/admin/categories", categoryRouter);

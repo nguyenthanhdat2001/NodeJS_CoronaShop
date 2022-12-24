@@ -26,7 +26,7 @@ const oneDay = 1000 * 60 * 60 * 24;
 app.use(session({
   secret: 'hello',
   resave: false,
-  saveUninitialized: true,  
+  saveUninitialized: true,
   cookie: {
     secure: true,
     maxAge: oneDay,
@@ -60,13 +60,14 @@ app.set("views", path.join(__dirname, "resources", "views"));
 // check login
 app.use((req, res, next) => {
   const userID = '63a27e54ea49ea5545391744'
-  // console.log('Session: ', userID)
+  // const userID = req.session.customer
+  console.log('Session: ', userID)
   customer.findById(userID)
     .then(customerID => {
       req.user = customerID;
       next()
     })
-    .catch(err => console.log("Error: ", err))
+    .catch(next)
 })
 
 //Route init

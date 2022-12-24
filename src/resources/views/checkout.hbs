@@ -129,10 +129,14 @@
                                     <td>{{this.address}}</td>
                                     <td>{{this.phone_number}}</td>
                                     <td>{{this.total_price}} $</td>
+                                    <td>
+                                        <a href="/checkout/{{this._id}}" class="btn btn-primary mr-1 mt-1">Chi tiết đơn
+                                            hàng</a>
+                                    </td>
                                 </tr>
                                 {{else}}
                                 <tr>
-                                    <td colspan="8" class="text-center">Chưa có sản phẩm nào được chuyển đi</td>
+                                    <td colspan="8" class="text-center">Chưa có sản phẩm nào đã mua</td>
                                 </tr>
                                 {{/each}}
                             </tbody>
