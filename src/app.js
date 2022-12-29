@@ -57,19 +57,6 @@ app.set("views", path.join(__dirname, "resources", "views"));
 //Morgan HTTP logger
 // app.use(morgan("combined"));
 
-// check login
-app.use((req, res, next) => {
-  const userID = '63a27e54ea49ea5545391744'
-  // const userID = req.session.customer
-  console.log('Session: ', userID)
-  customer.findById(userID)
-    .then(customerID => {
-      req.user = customerID;
-      next()
-    })
-    .catch(next)
-})
-
 //Route init
 router(app)
 
